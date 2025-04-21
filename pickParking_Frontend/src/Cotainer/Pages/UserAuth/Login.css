@@ -37,19 +37,19 @@
   position: absolute;
   width: 60px;
   height: 30px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 
 .car1 {
   top: 30%;
-  background: #ff5555;
-  box-shadow: 0 0 10px rgba(255, 85, 85, 0.5);
+  /* background: #ff5555; */
+  /* box-shadow: 0 0 10px rgba(244, 241, 241, 0.5); */
 }
 
 .car2 {
   top: 70%;
-  background: #55ff55;
-  box-shadow: 0 0 10px rgba(85, 255, 85, 0.5);
+  /* background: #55ff55;
+  box-shadow: 0 0 10px rgba(85, 255, 85, 0.5); */
 }
 
 .parking-background::before {

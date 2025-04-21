@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Card } from "antd";
 import { motion } from "framer-motion";
+import { FaCarSide } from "react-icons/fa6";
 import "./Login.css"; // Add this for custom CSS animations
 import {
   HomeOutlined,
@@ -9,6 +10,7 @@ import {
   SmileOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
+import { FaTruckMonster } from "react-icons/fa";
 const Login = () => {
   const [form] = Form.useForm();
   const onFinish = (values) => {
@@ -31,17 +33,18 @@ const Login = () => {
         <div className="parking-slot slot3"></div>
         <motion.div
           className="vehicle car1"
-          animate={{ x: ["-900%", "900%"] }}
+          animate={{ x: ["-999%", "999%"] }}
           transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
         >
-          {" "}
-          <HomeOutlined />
+          <FaCarSide style={{ fontSize: "60px", color: "red" }} />
         </motion.div>
         <motion.div
           className="vehicle car2"
-          animate={{ x: ["900%", "-900%"] }}
+          animate={{ x: ["999%", "-999%"] }}
           transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-        />
+        >
+          <FaTruckMonster style={{ fontSize: "80px", color: "green" }} />
+        </motion.div>
         <Card
           style={{
             width: 400,
