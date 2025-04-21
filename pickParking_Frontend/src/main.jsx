@@ -34,6 +34,7 @@ import { Provider } from "react-redux";
 import Store from "./Cotainer/Store";
 import Login from "./Cotainer/Pages/UserAuth/SiginIn";
 import LayoutBar from "./Cotainer/Layout/Layout";
+import MapComponent from "./Cotainer/Pages/Map/Map";
 const mainRoutes = [
   {
     path: "/",
@@ -54,6 +55,10 @@ const mainRoutes = [
       {
         path: "integration",
         element: <Login />,
+      },
+      {
+        path: "mapComponent",
+        element: <MapComponent />,
       },
     ],
   },
