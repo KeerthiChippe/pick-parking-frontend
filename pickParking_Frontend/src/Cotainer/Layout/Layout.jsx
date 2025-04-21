@@ -19,12 +19,21 @@ import {
   ApiOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, Spin, Badge, notification, Space } from "antd";
+import {
+  Button,
+  Layout,
+  Menu,
+  Spin,
+  Badge,
+  notification,
+  Space,
+  Image,
+} from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import PageVisibility from "react-page-visibility";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import logo from "../../../public/parkinglogo.png";
+import logo from "../../../public/p.png";
 
 const { Header, Content } = Layout;
 
@@ -52,18 +61,10 @@ const SideBar = () => {
   const [selectedDashboard, setSelectedDashboard] = useState(
     () => localStorage.getItem("selectedDashboard") || "telephony"
   );
-  const [isTabActive, setIsTabActive] = useState(true);
-  const [profileOpen, setProfileOpen] = useState(false);
-
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const logoutLoad = useSelector(
-    (state) => state.AuthSlice?.logOutLoading || false
-  );
-
   const userRole = localStorage.getItem("role");
-
   const items = [
     {
       icon: AppstoreOutlined,
@@ -135,7 +136,7 @@ const SideBar = () => {
         {
           icon: <HistoryOutlined />,
           label: "Call History",
-          route: "/callHistory",
+          route: "/mapComponent",
         },
         { icon: <ArrowDownOutlined />, label: "Inbound", route: "/inbound" },
         { icon: <ArrowUpOutlined />, label: "Outbound", route: "/outbound" },
@@ -216,8 +217,6 @@ const SideBar = () => {
     navigate(route);
   };
   return (
-    // <Spin spinning={logoutLoad} tip="Logging out, please wait...">
-    //   <PageVisibility onChange={(isVisible) => setIsTabActive(isVisible)}>
     <Layout>
       <Header
         style={{
@@ -235,7 +234,7 @@ const SideBar = () => {
           <img
             src={logo}
             alt="Logo"
-            style={{ height: "70px", marginTop: "15px" }}
+            style={{ height: "80px", marginTop: "30px" }}
           />
         </div>
         <Space>
@@ -299,8 +298,6 @@ const SideBar = () => {
         </div>
       </Content>
     </Layout>
-    /* </PageVisibility>
-    </Spin> */
   );
 };
 
