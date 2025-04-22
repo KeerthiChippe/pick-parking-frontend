@@ -41,7 +41,7 @@ const mainRoutes = [
     element: <LayoutBar />,
     children: [
       {
-        path: "dashboard",
+        path: "siginin",
         element: <Login />,
       },
       {

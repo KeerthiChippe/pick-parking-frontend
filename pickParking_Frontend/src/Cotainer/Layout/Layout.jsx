@@ -28,6 +28,7 @@ import {
   notification,
   Space,
   Image,
+  Flex,
 } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import PageVisibility from "react-page-visibility";
@@ -37,6 +38,7 @@ import logo from "../../../public/p.png";
 
 const { Header, Content } = Layout;
 
+// Styled Button
 const StyledButton = styled(Button)`
   background: linear-gradient(90deg, #6a5acd, #7b68ee);
   color: white;
@@ -55,6 +57,38 @@ const StyledButton = styled(Button)`
     background: linear-gradient(90deg, #7b68ee, #6a5acd);
   }
 `;
+
+// Styled Menu
+const StyledMenu = styled(Menu)`
+  background: #001529;
+  color: rgba(255, 255, 255, 0.85);
+  border: none;
+
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+    color: rgba(255, 255, 255, 0.85);
+    &:hover {
+      background: #003a8c !important;
+      color: #fff !important;
+    }
+  }
+
+  .ant-menu-item-selected {
+    background: #003a8c !important;
+    color: #fff !important;
+  }
+
+  .ant-menu-submenu-open,
+  .ant-menu-submenu-active {
+    background: #003a8c !important;
+    color: #fff !important;
+  }
+
+  .ant-menu-sub {
+    background: #001529 !important;
+  }
+`;
+
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [activeKey, setActiveKey] = useState("");
@@ -65,68 +99,8 @@ const SideBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userRole = localStorage.getItem("role");
+
   const items = [
-    {
-      icon: AppstoreOutlined,
-      label: "Dashboard",
-      route: "/dashboard",
-      dashboard: "telephony",
-      roles: ["admin"],
-    },
-    {
-      icon: AppstoreOutlined,
-      label: "Dashboard",
-      route: "/dashboard",
-      dashboard: "College",
-      roles: ["admin"],
-    },
-    {
-      icon: UserOutlined,
-      label: "Client Data Form",
-      route: "/agent",
-      roles: ["agent", "team_lead"],
-    },
-    {
-      icon: ContainerOutlined,
-      label: "Manage Leads",
-      route: "/leads",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-    },
-    {
-      icon: AliyunOutlined,
-      label: "Leads Funnel",
-      route: "/LeadsFunnel",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-    },
-    {
-      icon: MinusCircleOutlined,
-      label: "Missed Call",
-      route: "/missed_Call",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-      count: parseInt(localStorage.getItem("missedCall"), 10) || 0,
-      badge: true,
-    },
-    {
-      icon: SubnodeOutlined,
-      label: "Followup Report",
-      route: "/followup_report",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-      count: parseInt(localStorage.getItem("followUp"), 10) || 0,
-      badge: true,
-    },
-    {
-      icon: MailOutlined,
-      label: "Voice Mail",
-      route: "/voice_mail",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-      count: 0,
-      badge: true,
-    },
     {
       icon: AreaChartOutlined,
       label: "Statistics",
@@ -137,25 +111,6 @@ const SideBar = () => {
           icon: <HistoryOutlined />,
           label: "Call History",
           route: "/mapComponent",
-        },
-        { icon: <ArrowDownOutlined />, label: "Inbound", route: "/inbound" },
-        { icon: <ArrowUpOutlined />, label: "Outbound", route: "/outbound" },
-        {
-          icon: <SnippetsFilled />,
-          label: "Agent TimeDetails",
-          route: "/agentTimeDetails",
-        },
-        {
-          icon: <PhoneFilled />,
-          label: "CallQuality Dashboard",
-          route: "/callquality",
-        },
-        { icon: <MailOutlined />, label: "Email", route: "/email" },
-        {
-          icon: <WhatsAppOutlined />,
-          label: "Whatsapp",
-          route: "/whatsapp",
-          count: localStorage.getItem("whatsAppCount"),
         },
       ],
     },
@@ -216,6 +171,7 @@ const SideBar = () => {
   const handleMenuClick = (route) => {
     navigate(route);
   };
+
   return (
     <Layout>
       <Header
@@ -227,69 +183,78 @@ const SideBar = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "0 10px",
         }}
       >
-        <div>
+        <div
+          onClick={() => {
+            navigate("/mapComponent");
+          }}
+          style={{ cursor: "pointer" }}
+        >
           <img
             src={logo}
             alt="Logo"
             style={{ height: "80px", marginTop: "30px" }}
           />
         </div>
+        <Flex>
+          <StyledMenu
+            mode="horizontal"
+            selectedKeys={[activeKey]}
+            style={{ justifyContent: "center", border: "none" }}
+          >
+            {items.map((item) =>
+              item.subItems ? (
+                <Menu.SubMenu
+                  key={item.key}
+                  icon={item.icon}
+                  title={item.label}
+                >
+                  {item.subItems.map((subItem, subIndex) => (
+                    <Menu.Item
+                      key={`${item.key}-${subIndex}`}
+                      icon={subItem.icon}
+                      onClick={() => handleMenuClick(subItem.route)}
+                    >
+                      {subItem.label}
+                    </Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+              ) : (
+                <Menu.Item
+                  key={item.key}
+                  icon={item.icon}
+                  onClick={() => handleMenuClick(item.route)}
+                >
+                  {item.label}
+                </Menu.Item>
+              )
+            )}
+          </StyledMenu>
+        </Flex>
         <Space>
-          <StyledButton>Sigin In</StyledButton>/<StyledButton>Reg</StyledButton>
+          <StyledButton
+            onClick={() => {
+              navigate("/siginin");
+            }}
+          >
+            Sign In
+          </StyledButton>
+          <StyledButton
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            Register
+          </StyledButton>
         </Space>
       </Header>
 
-      <Header
-        style={{
-          position: "sticky",
-          top: 39,
-          zIndex: 40,
-          background: "#fff",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 0,
-          margin: 0,
-          borderTop: "1px solid lightgray",
-        }}
-      >
-        <Menu
-          mode="horizontal"
-          selectedKeys={[activeKey]}
-          style={{ flexGrow: 1, justifyContent: "center" }}
-        >
-          {items.map((item) =>
-            item.subItems ? (
-              <Menu.SubMenu key={item.key} title={item.label}>
-                {item.subItems.map((subItem, subIndex) => (
-                  <Menu.Item
-                    key={`${item.key}-${subIndex}`}
-                    onClick={() => handleMenuClick(subItem.route)}
-                  >
-                    {subItem.label}
-                  </Menu.Item>
-                ))}
-              </Menu.SubMenu>
-            ) : (
-              <Menu.Item
-                key={item.key}
-                onClick={() => handleMenuClick(item.route)}
-              >
-                {item.label}
-              </Menu.Item>
-            )
-          )}
-        </Menu>
-      </Header>
       <Content
         style={{
           height: "100vh",
           maxHeight: `calc(100vh - ${userRole === "agent" ? 150 : 150}px)`,
           background: "#f0f2f5",
-          // maxHeight:`calc(100vh - ${userRole === "agent" ? 120 : 80}px)`,
           overflowY: "auto",
         }}
       >
