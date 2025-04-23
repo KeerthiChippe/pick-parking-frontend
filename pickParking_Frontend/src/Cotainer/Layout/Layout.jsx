@@ -35,10 +35,7 @@ import PageVisibility from "react-page-visibility";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import logo from "../../../public/p.png";
-
 const { Header, Content } = Layout;
-
-// Styled Button
 const StyledButton = styled(Button)`
   background: linear-gradient(90deg, #6a5acd, #7b68ee);
   color: white;
@@ -57,8 +54,6 @@ const StyledButton = styled(Button)`
     background: linear-gradient(90deg, #7b68ee, #6a5acd);
   }
 `;
-
-// Styled Menu
 const StyledMenu = styled(Menu)`
   background: #001529;
   color: rgba(255, 255, 255, 0.85);
@@ -90,7 +85,6 @@ const StyledMenu = styled(Menu)`
 `;
 
 const SideBar = () => {
-  const [collapsed, setCollapsed] = useState(false);
   const [activeKey, setActiveKey] = useState("");
   const [selectedDashboard, setSelectedDashboard] = useState(
     () => localStorage.getItem("selectedDashboard") || "telephony"
@@ -167,7 +161,6 @@ const SideBar = () => {
       }
     }
   }, [location.pathname, items]);
-
   const handleMenuClick = (route) => {
     navigate(route);
   };
@@ -177,8 +170,6 @@ const SideBar = () => {
       <Header
         style={{
           position: "sticky",
-          top: 0,
-          zIndex: 10,
           background: "#001529",
           display: "flex",
           justifyContent: "space-between",
@@ -249,18 +240,15 @@ const SideBar = () => {
           </StyledButton>
         </Space>
       </Header>
-
       <Content
         style={{
-          height: "100vh",
-          maxHeight: `calc(100vh - ${userRole === "agent" ? 150 : 150}px)`,
+          height: "85vh",
+          maxHeight: `100vh`,
           background: "#f0f2f5",
           overflowY: "auto",
         }}
       >
-        <div style={{ padding: "8px" }}>
-          <Outlet />
-        </div>
+        <Outlet />
       </Content>
     </Layout>
   );
