@@ -191,7 +191,7 @@ const ParkingSpotFinder = () => {
     },
   ];
   return (
-    <div style={{ padding: '16px', maxWidth: '1280px', margin: '0 auto' }}>
+    <div >
       <div style={{ display: 'flex', gap: '16px' }}>
         {/* Filters Sidebar */}
         <div style={{ width: '25%', background: '#fff', padding: '16px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
@@ -289,7 +289,7 @@ const ParkingSpotFinder = () => {
         </div>
 
         {/* Main Content */}
-        <div style={{ width: '100%' }}>
+        {/* <div style={{ width: '100%' }}>
           {/* Search Button and Sort */}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
             <Title level={4}>
@@ -321,11 +321,10 @@ const ParkingSpotFinder = () => {
             />
           )}
 
-          {/* Map Placeholder */}
           <div style={{ background: '#f0f0f0', height: '256px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', marginBottom: '16px' }}>
          <div className="map-container">
    
-    </div>
+    {/* </div> */} 
           </div>
    <input
         type="range"
@@ -337,13 +336,13 @@ const ParkingSpotFinder = () => {
         onChange={(e) => setRadius(parseInt(e.target.value))}
       />
       <span>{radius} km</span>
-      <MapContainer center={center} zoom={13} style={{ height: "550px" }}>
+      <MapContainer center={center} zoom={13} style={{ height: "500px" }}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        <SearchControl />
+        {/* <SearchControl /> */}
 
         <Circle center={center} radius={radius * 1000} />
         {markers.map((marker, index) => (
