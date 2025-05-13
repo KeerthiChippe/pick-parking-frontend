@@ -1,37 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
-  UserOutlined,
-  LogoutOutlined,
-  AppstoreOutlined,
-  MinusCircleOutlined,
-  SubnodeOutlined,
-  PhoneOutlined,
-  ContainerOutlined,
-  AliyunOutlined,
-  MailOutlined,
   AreaChartOutlined,
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-  WhatsAppOutlined,
   HistoryOutlined,
-  SnippetsFilled,
-  PhoneFilled,
   ApiOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
-import {
-  Button,
-  Layout,
-  Menu,
-  Spin,
-  Badge,
-  notification,
-  Space,
-  Image,
-  Flex,
-} from "antd";
+import { Button, Layout, Menu, Space } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import PageVisibility from "react-page-visibility";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import logo from "../../../public/p.png";
@@ -54,36 +28,6 @@ const StyledButton = styled(Button)`
     background: linear-gradient(90deg, #7b68ee, #6a5acd);
   }
 `;
-const StyledMenu = styled(Menu)`
-  background: #001529;
-  color: rgba(255, 255, 255, 0.85);
-  border: none;
-
-  .ant-menu-item,
-  .ant-menu-submenu-title {
-    color: rgba(255, 255, 255, 0.85);
-    &:hover {
-      background: #003a8c !important;
-      color: #fff !important;
-    }
-  }
-
-  .ant-menu-item-selected {
-    background: #003a8c !important;
-    color: #fff !important;
-  }
-
-  .ant-menu-submenu-open,
-  .ant-menu-submenu-active {
-    background: #003a8c !important;
-    color: #fff !important;
-  }
-
-  .ant-menu-sub {
-    background: #001529 !important;
-  }
-`;
-
 const SideBar = () => {
   const [activeKey, setActiveKey] = useState("");
   const [selectedDashboard, setSelectedDashboard] = useState(
@@ -188,7 +132,7 @@ const SideBar = () => {
             style={{ height: "80px", marginTop: "30px" }}
           />
         </div>
-        <Flex>
+        {/* <Flex>
           <StyledMenu
             mode="horizontal"
             selectedKeys={[activeKey]}
@@ -222,7 +166,7 @@ const SideBar = () => {
               )
             )}
           </StyledMenu>
-        </Flex>
+        </Flex> */}
         <Space>
           <StyledButton
             onClick={() => {
@@ -242,8 +186,8 @@ const SideBar = () => {
       </Header>
       <Content
         style={{
-          height: "85vh",
-          maxHeight: `100vh`,
+          height: "100vh",
+          maxHeight: `90vh`,
           background: "#f0f2f5",
           overflowY: "auto",
         }}
