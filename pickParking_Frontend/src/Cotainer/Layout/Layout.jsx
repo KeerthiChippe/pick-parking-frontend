@@ -1,43 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {
-  UserOutlined,
-  LogoutOutlined,
-  AppstoreOutlined,
-  MinusCircleOutlined,
-  SubnodeOutlined,
-  PhoneOutlined,
-  ContainerOutlined,
-  AliyunOutlined,
-  MailOutlined,
   AreaChartOutlined,
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-  WhatsAppOutlined,
   HistoryOutlined,
-  SnippetsFilled,
-  PhoneFilled,
   ApiOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
-import {
-  Button,
-  Layout,
-  Menu,
-  Spin,
-  Badge,
-  notification,
-  Space,
-  Image,
-  Flex,
-} from "antd";
+import { Button, Layout, Menu, Space } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import PageVisibility from "react-page-visibility";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import logo from "../../../public/p.png";
-
 const { Header, Content } = Layout;
-
 const StyledButton = styled(Button)`
   background: linear-gradient(90deg, #6a5acd, #7b68ee);
   color: white;
@@ -57,7 +29,6 @@ const StyledButton = styled(Button)`
   }
 `;
 const SideBar = () => {
-  const [collapsed, setCollapsed] = useState(false);
   const [activeKey, setActiveKey] = useState("");
   const [selectedDashboard, setSelectedDashboard] = useState(
     () => localStorage.getItem("selectedDashboard") || "telephony"
@@ -65,22 +36,9 @@ const SideBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userRole = "admin";
+  const userRole = localStorage.getItem("role");
+
   const items = [
-    {
-      icon: AppstoreOutlined,
-      label: "Dashboard",
-      route: "/dashboard",
-      dashboard: "telephony",
-      roles: ["admin"],
-    },
-    {
-      icon: AppstoreOutlined,
-      label: "Dashboard",
-      route: "/dashboard",
-      dashboard: "College",
-      roles: ["admin"],
-    },
     {
       icon: AreaChartOutlined,
       label: "Statistics",
@@ -92,26 +50,14 @@ const SideBar = () => {
           label: "Call History",
           route: "/mapComponent",
         },
-        { icon: <ArrowDownOutlined />, label: "Inbound", route: "/inbound" },
-        { icon: <ArrowUpOutlined />, label: "Outbound", route: "/outbound" },
-        {
-          icon: <SnippetsFilled />,
-          label: "Agent TimeDetails",
-          route: "/agentTimeDetails",
-        },
-        {
-          icon: <PhoneFilled />,
-          label: "CallQuality Dashboard",
-          route: "/callquality",
-        },
-        { icon: <MailOutlined />, label: "Email", route: "/email" },
-        {
-          icon: <WhatsAppOutlined />,
-          label: "Whatsapp",
-          route: "/whatsapp",
-          count: localStorage.getItem("whatsAppCount"),
-        },
       ],
+    },
+    {
+      icon: ApiOutlined,
+      label: "Integration",
+      route: "/integration",
+      dashboard: "telephony",
+      roles: ["admin"],
     },
   ]
     .filter(
@@ -159,76 +105,94 @@ const SideBar = () => {
       }
     }
   }, [location.pathname, items]);
-
   const handleMenuClick = (route) => {
     navigate(route);
   };
+
   return (
     <Layout>
       <Header
         style={{
           position: "sticky",
-          top: 0,
-          zIndex: 10,
           background: "#001529",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "0 10px",
         }}
       >
-        <div>
+        <div
+          onClick={() => {
+            navigate("/mapComponent");
+          }}
+          style={{ cursor: "pointer" }}
+        >
           <img
             src={logo}
             alt="Logo"
-            style={{ height: "80px", marginTop: "30px" }}
+            style={{ height: "80px", marginTop: "0px" }}
           />
         </div>
-        <Flex   style={{ height: "50px", }}  >
-        <Menu
-          mode="horizontal"
-          selectedKeys={[activeKey]}
-          style={{ flexGrow: 1, justifyContent: "center" }}
-        >
-          {items.map((item) =>
-            item.subItems ? (
-              <Menu.SubMenu key={item.key} title={item.label}>
-                {item.subItems.map((subItem, subIndex) => (
-                  <Menu.Item
-                    key={`${item.key}-${subIndex}`}
-                    onClick={() => handleMenuClick(subItem.route)}
-                  >
-                    {subItem.label}
-                  </Menu.Item>
-                ))}
-              </Menu.SubMenu>
-            ) : (
-              <Menu.Item
-                key={item.key}
-                onClick={() => handleMenuClick(item.route)}
-              >
-                {item.label}
-              </Menu.Item>
-            )
-          )}
-        </Menu>
-        </Flex>
+        {/* <Flex>
+          <StyledMenu
+            mode="horizontal"
+            selectedKeys={[activeKey]}
+            style={{ justifyContent: "center", border: "none" }}
+          >
+            {items.map((item) =>
+              item.subItems ? (
+                <Menu.SubMenu
+                  key={item.key}
+                  icon={item.icon}
+                  title={item.label}
+                >
+                  {item.subItems.map((subItem, subIndex) => (
+                    <Menu.Item
+                      key={`${item.key}-${subIndex}`}
+                      icon={subItem.icon}
+                      onClick={() => handleMenuClick(subItem.route)}
+                    >
+                      {subItem.label}
+                    </Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+              ) : (
+                <Menu.Item
+                  key={item.key}
+                  icon={item.icon}
+                  onClick={() => handleMenuClick(item.route)}
+                >
+                  {item.label}
+                </Menu.Item>
+              )
+            )}
+          </StyledMenu>
+        </Flex> */}
         <Space>
-          <StyledButton>Sigin In</StyledButton>/<StyledButton>Reg</StyledButton>
+          <StyledButton
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            Sign In
+          </StyledButton>
+          <StyledButton
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            Register
+          </StyledButton>
         </Space>
       </Header>
       <Content
         style={{
           height: "100vh",
-          maxHeight: `calc(100vh - ${userRole === "agent" ? 150 : 150}px)`,
+          maxHeight: `90vh`,
           background: "#f0f2f5",
-          // maxHeight:`calc(100vh - ${userRole === "agent" ? 120 : 80}px)`,
           overflowY: "auto",
         }}
       >
-        <div style={{ padding: "8px" }}>
-          <Outlet />
-        </div>
+        <Outlet />
       </Content>
     </Layout>
   );

@@ -1,32 +1,3 @@
-// import React from "react";
-// import ReactDOM from "react-dom/client";
-// import { RouterProvider, createBrowserRouter } from "react-router-dom";
-// import { Provider } from "react-redux";
-// import Login from "./Cotainer/Pages/UserAuth/SiginIn";
-// import App from "./App";
-// import SideBar from "./Cotainer/Layout/Layout";
-// import Store from "./Cotainer/Store";
-// const mainRoutes = [
-//   {
-//     path: "/",
-//     element: <App />,
-//     children: [
-//       {
-//         path: "/singin",
-//         element: <Login />,
-//       },
-//     ],
-//   },
-// ];
-// const FinalRoutes = [...mainRoutes];
-// const router = createBrowserRouter(FinalRoutes);
-// ReactDOM.createRoot(document.getElementById("root")).render(
-//   <Provider store={Store}>
-//     <RouterProvider router={router}>
-//       <App />
-//     </RouterProvider>
-//   </Provider>
-// );
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -35,18 +6,21 @@ import Store from "./Cotainer/Store";
 import Login from "./Cotainer/Pages/UserAuth/SiginIn";
 import LayoutBar from "./Cotainer/Layout/Layout";
 import MapComponent from "./Cotainer/Pages/Map/Map";
+import Register from "./Cotainer/Pages/UserAuth/Register";
+import "leaflet-geosearch/dist/geosearch.css";
+import "./index.css";
 const mainRoutes = [
   {
     path: "/",
     element: <LayoutBar />,
     children: [
       {
-        index: true, // 👈 This makes it the default route under "/"
-        element: <MapComponent />,
+        path: "login",
+        element: <Login />,
       },
       {
-        path: "dashboard",
-        element: <Login />,
+        path: "register",
+        element: <Register />,
       },
       {
         path: "agentReportDetails/:id",
@@ -67,10 +41,7 @@ const mainRoutes = [
     ],
   },
 ];
-
-
 const router = createBrowserRouter(mainRoutes);
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={Store}>
     <RouterProvider router={router} />
