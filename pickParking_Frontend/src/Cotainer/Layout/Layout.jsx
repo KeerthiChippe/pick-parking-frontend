@@ -28,6 +28,7 @@ import {
   notification,
   Space,
   Image,
+  Flex,
 } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import PageVisibility from "react-page-visibility";
@@ -64,7 +65,7 @@ const SideBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userRole = localStorage.getItem("role");
+  const userRole = "admin";
   const items = [
     {
       icon: AppstoreOutlined,
@@ -79,53 +80,6 @@ const SideBar = () => {
       route: "/dashboard",
       dashboard: "College",
       roles: ["admin"],
-    },
-    {
-      icon: UserOutlined,
-      label: "Client Data Form",
-      route: "/agent",
-      roles: ["agent", "team_lead"],
-    },
-    {
-      icon: ContainerOutlined,
-      label: "Manage Leads",
-      route: "/leads",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-    },
-    {
-      icon: AliyunOutlined,
-      label: "Leads Funnel",
-      route: "/LeadsFunnel",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-    },
-    {
-      icon: MinusCircleOutlined,
-      label: "Missed Call",
-      route: "/missed_Call",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-      count: parseInt(localStorage.getItem("missedCall"), 10) || 0,
-      badge: true,
-    },
-    {
-      icon: SubnodeOutlined,
-      label: "Followup Report",
-      route: "/followup_report",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-      count: parseInt(localStorage.getItem("followUp"), 10) || 0,
-      badge: true,
-    },
-    {
-      icon: MailOutlined,
-      label: "Voice Mail",
-      route: "/voice_mail",
-      dashboard: "telephony",
-      roles: ["admin", "agent", "team_lead"],
-      count: 0,
-      badge: true,
     },
     {
       icon: AreaChartOutlined,
@@ -158,13 +112,6 @@ const SideBar = () => {
           count: localStorage.getItem("whatsAppCount"),
         },
       ],
-    },
-    {
-      icon: ApiOutlined,
-      label: "Integration",
-      route: "/integration",
-      dashboard: "telephony",
-      roles: ["admin"],
     },
   ]
     .filter(
@@ -237,25 +184,7 @@ const SideBar = () => {
             style={{ height: "80px", marginTop: "30px" }}
           />
         </div>
-        <Space>
-          <StyledButton>Sigin In</StyledButton>/<StyledButton>Reg</StyledButton>
-        </Space>
-      </Header>
-
-      <Header
-        style={{
-          position: "sticky",
-          top: 39,
-          zIndex: 40,
-          background: "#fff",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 0,
-          margin: 0,
-          borderTop: "1px solid lightgray",
-        }}
-      >
+        <Flex   style={{ height: "50px", }}  >
         <Menu
           mode="horizontal"
           selectedKeys={[activeKey]}
@@ -283,6 +212,10 @@ const SideBar = () => {
             )
           )}
         </Menu>
+        </Flex>
+        <Space>
+          <StyledButton>Sigin In</StyledButton>/<StyledButton>Reg</StyledButton>
+        </Space>
       </Header>
       <Content
         style={{

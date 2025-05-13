@@ -9,5 +9,6 @@ function App() {
     <ConfigProvider>
       <SideBar />
     </ConfigProvider>
-
+  )
+}
 export default App;

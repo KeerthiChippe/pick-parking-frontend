@@ -41,6 +41,10 @@ const mainRoutes = [
     element: <LayoutBar />,
     children: [
       {
+        index: true, // 👈 This makes it the default route under "/"
+        element: <MapComponent />,
+      },
+      {
         path: "dashboard",
         element: <Login />,
       },
@@ -63,6 +67,7 @@ const mainRoutes = [
     ],
   },
 ];
+
 
 const router = createBrowserRouter(mainRoutes);
 
