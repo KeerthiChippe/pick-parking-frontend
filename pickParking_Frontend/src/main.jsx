@@ -7,7 +7,7 @@ import Login from "./Cotainer/Pages/UserAuth/SiginIn";
 import LayoutBar from "./Cotainer/Layout/Layout";
 import MapComponent from "./Cotainer/Pages/Map/Map";
 import Register from "./Cotainer/Pages/UserAuth/Register";
-import 'leaflet-geosearch/dist/geosearch.css';
+import "leaflet-geosearch/dist/geosearch.css";
 import "./index.css";
 const mainRoutes = [
   {

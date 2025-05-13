@@ -28,10 +28,11 @@ const RegisterComponent = () => {
       style={{
         background:
           "linear-gradient(90deg,rgb(51, 52, 52),rgb(50, 71, 79),rgb(36, 77, 110))",
-        minHeight: "85vh",
+        // minHeight: "85vh",
       }}
+      // className="bg-red-500"
     >
-      <Row>
+      <Row className="pb-5">
         <Col
           span={12}
           style={{

@@ -186,8 +186,8 @@ const SideBar = () => {
       </Header>
       <Content
         style={{
-          height: "95vh",
-          maxHeight: `100vh`,
+          height: "100vh",
+          maxHeight: `90vh`,
           background: "#f0f2f5",
           overflowY: "auto",
         }}
