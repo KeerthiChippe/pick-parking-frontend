@@ -8,6 +8,8 @@ import LayoutBar from "./Cotainer/Layout/Layout";
 import MapComponent from "./Cotainer/Pages/Map/Map";
 import Register from "./Cotainer/Pages/UserAuth/Register";
 import "leaflet-geosearch/dist/geosearch.css";
+import HomeIndex from "./Cotainer/Pages/Home/Home";
+import HowItWorks from "./Cotainer/Pages/Home/Working";
 import "./index.css";
 const mainRoutes = [
   {
@@ -37,6 +39,14 @@ const mainRoutes = [
       {
         path: "mapComponent",
         element: <MapComponent />,
+      },
+      {
+        path: "homeindex",
+        element: <HomeIndex />,
+      },
+      {
+        path: "how-it-works",
+        element: <HowItWorks />,
       },
     ],
   },
