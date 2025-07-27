@@ -249,7 +249,7 @@ const Sidebar = () => {
       </Sider>
 
       <Layout>
-        <Content className="p-6 bg-gray-100 min-h-screen">
+        <Content className=" min-h-screen">
           <div className="flex items-center justify-between mb-6">
             <div className="relative w-full max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />

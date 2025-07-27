@@ -291,7 +291,7 @@ const SideBar = () => {
           ))}
         </div>
       )}
-      <Content className="h-[calc(100vh-64px)] bg-gray-50 overflow-y-auto p-4">
+      <Content className="h-[calc(100vh-64px)] bg-gray-50 overflow-y-auto thin-scrollbar">
         <Outlet />
       </Content>
     </Layout>

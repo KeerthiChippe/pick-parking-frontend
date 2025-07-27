@@ -1,6 +1,66 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-  margin: 0;
+
+thin-scrollbar::-webkit-scrollbar {
+  width: 4px;
 }
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.thin-chat-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.thin-chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thin-chat-scrollbar::-webkit-scrollbar-thumb {
+  background: #ced4da;
+  border-radius: 5px;
+}
+
+.thin-chat-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ced4da;
+}
+
+/* .advanced-oval-menu .ant-menu-item,
+.advanced-oval-menu .ant-menu-submenu {
+  @apply rounded-full px-4 py-0 mx-1 text-sm transition-all duration-300;
+  background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.advanced-oval-menu .ant-menu-item-selected,
+.advanced-oval-menu .ant-menu-submenu-selected {
+  @apply rounded-full;
+  background-color: rgba(16, 185, 129, 0.8) !important;
+  color: #fff !important;
+}
+.advanced-oval-menu .ant-menu-item:hover,
+.advanced-oval-menu .ant-menu-submenu:hover {
+  @apply rounded-full;
+  background-color: rgba(59, 130, 246, 0.5);
+  color: #fff !important;
+}
+.advanced-oval-menu .ant-menu-submenu-title {
+  font-size: 16px;
+  height: 25px;
+}
+
+.advanced-oval-menu .ant-menu-submenu .ant-menu-item {
+  font-size: 16px;
+  padding: 0 20px;
+  height: 30px;
+} */
