@@ -209,7 +209,6 @@ const SideBar = () => {
         </div>
       </Header>
 
-      {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white text-black px-4 py-4 border-t border-gray-200 shadow-md space-y-4">
           {/* Profile Section */}
@@ -266,8 +265,6 @@ const SideBar = () => {
           ))}
         </div>
       )}
-
-      {/* Main content */}
       <Content className="h-[calc(100vh-64px)] bg-gray-50 overflow-y-auto p-4">
         <Outlet />
       </Content>
