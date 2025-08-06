@@ -8,6 +8,7 @@ import LayoutBar from "./Cotainer/Layout/Layout";
 import MapComponent from "./Cotainer/Pages/Map/Map";
 import Register from "./Cotainer/Pages/UserAuth/Register";
 import "leaflet-geosearch/dist/geosearch.css";
+import UserDashboard from "./Cotainer/Pages/User/User";
 import "./index.css";
 const mainRoutes = [
   {
@@ -31,8 +32,8 @@ const mainRoutes = [
         element: <Login />,
       },
       {
-        path: "integration",
-        element: <Login />,
+        path: "userDashboard",
+        element: <UserDashboard />,
       },
       {
         path: "mapComponent",
