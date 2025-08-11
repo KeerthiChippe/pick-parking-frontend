@@ -222,120 +222,7 @@ const ParkingSpotFinder = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <div className="w-80 bg-white p-6 shadow-lg">
-        <h2 className="text-xl font-semibold mb-4">Filters</h2>
-        <div className="space-y-4">
-          <Input
-            placeholder="Enter your location"
-            prefix={<span>📍</span>}
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="rounded"
-          />
-          <DatePicker
-            placeholder="Select date"
-            format="DD-MM-YYYY"
-            value={date}
-            onChange={(value) => setDate(value)}
-            className="w-full rounded"
-          />
-          <DatePicker.TimePicker
-            placeholder="Select time"
-            format="HH:mm"
-            value={time}
-            onChange={(value) => setTime(value)}
-            className="w-full rounded"
-          />
-          <div>
-            <p className="text-sm font-medium">Price Range</p>
-            <Slider
-              range
-              min={5}
-              max={50}
-              value={priceRange}
-              onChange={(value) => setPriceRange(value)}
-            />
-            <p className="text-sm">
-              ${priceRange[0]} - ${priceRange[1]}/hour
-            </p>
-          </div>
-          <div>
-            <p className="text-sm font-medium">Distance</p>
-            <Slider
-              min={0.1}
-              max={5}
-              step={0.1}
-              value={distance}
-              onChange={(value) => setDistance(value)}
-            />
-            <p className="text-sm">Within: {distance} mi</p>
-          </div>
-          <div>
-            <p className="text-sm font-medium">Parking Type</p>
-            <Checkbox.Group
-              value={parkingType}
-              onChange={(checkedValues) => setParkingType(checkedValues)}
-              className="flex flex-col space-y-2"
-            >
-              <Checkbox value="garage">Garage</Checkbox>
-              <Checkbox value="street">Street</Checkbox>
-              <Checkbox value="driveway">Driveway</Checkbox>
-              <Checkbox value="lot">Lot</Checkbox>
-            </Checkbox.Group>
-          </div>
-          <div>
-            <p className="text-sm font-medium">Features</p>
-            <Checkbox.Group
-              value={features}
-              onChange={(checkedValues) => setFeatures(checkedValues)}
-              className="flex flex-col space-y-2"
-            >
-              <Checkbox value="evCharging">EV Charging</Checkbox>
-              <Checkbox value="covered">Covered</Checkbox>
-              <Checkbox value="securityCamera">Security Camera</Checkbox>
-              <Checkbox value="24/7Access">24/7 Access</Checkbox>
-            </Checkbox.Group>
-          </div>
-          <Button
-            type="default"
-            block
-            onClick={resetFilters}
-            className="rounded hover:bg-gray-100"
-          >
-            Reset Filters
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 p-6">
-        <div className="flex justify-between items-center mb-4">
-          <Title level={4}>{spots.length} Parking Spots Found</Title>
-          <Select
-            value={sortBy}
-            onChange={(value) => setSortBy(value)}
-            className="w-40"
-          >
-            <Option value="priceLowToHigh">Price: Low to High</Option>
-            <Option value="priceHighToLow">Price: High to Low</Option>
-            <Option value="distance">Distance</Option>
-            <Option value="rating">Rating</Option>
-          </Select>
-        </div>
-
-        {error && (
-          <Alert
-            message="Error loading parking spots"
-            description={error}
-            type="error"
-            showIcon
-            closable
-            onClose={() => setError(null)}
-            className="mb-4"
-          />
-        )}
-
+      <div className="flex-1 p-2">
         <div className="mb-4">
           <MapContainer
             center={center}
@@ -346,7 +233,6 @@ const ParkingSpotFinder = () => {
               attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <SearchControl onSearch={handleSearch} />
             <Circle center={center} radius={radius * 1000} />
             {spots.map((spot) => (
               <Marker
@@ -377,48 +263,6 @@ const ParkingSpotFinder = () => {
             <span className="text-sm">{radius} km</span>
           </div>
         </div>
-
-        {spots.length > 0 ? (
-          spots.map((spot) => (
-            <Card
-              key={spot.id}
-              className="mb-4 shadow hover:shadow-lg transition"
-            >
-              <div className="flex justify-between items-center">
-                <div>
-                  <Title level={5}>{spot.name}</Title>
-                  <Text>Price: ${spot.price}/hour</Text>
-                  <br />
-                  <Text>Distance: {spot.distance.toFixed(2)} km</Text>
-                  <br />
-                  <Text>Type: {spot.type}</Text>
-                  <br />
-                  <Text>Features: {spot.features.join(", ")}</Text>
-                  <br />
-                  <Text>Rating: {spot.rating} ⭐</Text>
-                </div>
-                <Button type="primary" className="rounded">
-                  Book Now
-                </Button>
-              </div>
-            </Card>
-          ))
-        ) : (
-          <Text className="text-gray-500">
-            No parking spots found. Try adjusting your filters or search for a
-            new location.
-          </Text>
-        )}
-
-        {error && (
-          <Button
-            type="primary"
-            onClick={() => fetchSpots()}
-            className="mt-4 rounded"
-          >
-            Try Again
-          </Button>
-        )}
       </div>
     </div>
   );

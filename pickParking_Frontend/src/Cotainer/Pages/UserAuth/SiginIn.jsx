@@ -1,460 +1,178 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Card, Typography } from "antd";
-import {
-  CarOutlined,
-  LoadingOutlined,
-  MailOutlined,
-  LockOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { FaCarSide } from "react-icons/fa";
 
-const { Title, Text, Link } = Typography;
+const DataTable = () => {
+  const data = [
+    { id: 1, name: "John Doe", email: "john@example.com", age: 30 },
+    { id: 2, name: "Jane Smith", email: "jane@example.com", age: 25 },
+    { id: 3, name: "Bob Johnson", email: "bob@example.com", age: 35 },
+    // Add more data as needed
+  ];
 
-const Login = () => {
-  const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false);
-  const [parkingSpaces, setParkingSpaces] = useState([
-    { id: 1, occupied: false },
-    { id: 2, occupied: true },
-    { id: 3, occupied: false },
-    { id: 4, occupied: false },
-    { id: 5, occupied: false },
-    { id: 6, occupied: false },
-  ]);
-  const [carPosition, setCarPosition] = useState(-100);
-  const [truckPosition, setTruckPosition] = useState(100);
-  const [signalLight, setSignalLight] = useState("red");
+  const columns = [
+    { header: "ID", accessor: "id" },
+    { header: "Name", accessor: "name" },
+    { header: "Email", accessor: "email" },
+    { header: "Age", accessor: "age", render: (item) => `${item.age} years` },
+  ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterColumn, setFilterColumn] = useState("");
+  const [filteredData, setFilteredData] = useState(data);
 
-  // Update parking spaces randomly
+  // Handle search and filter
   useEffect(() => {
-    const interval = setInterval(() => {
-      setParkingSpaces((spaces) =>
-        spaces.map((space) => ({
-          ...space,
-          occupied: Math.random() > 0.6 ? !space.occupied : space.occupied,
-        }))
+    let result = data;
+
+    // Apply search
+    if (searchTerm) {
+      result = result.filter((item) =>
+        Object.values(item).some(
+          (val) =>
+            val &&
+            val.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        )
       );
-    }, 5000);
+    }
 
-    return () => clearInterval(interval);
-  }, []);
+    // Apply column filter
+    if (filterColumn) {
+      result = result.filter(
+        (item) =>
+          item[filterColumn] &&
+          item[filterColumn]
+            .toString()
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+      );
+    }
 
-  // Animate vehicles
-  useEffect(() => {
-    const carInterval = setInterval(() => {
-      setCarPosition((prev) => {
-        if (prev > 100) return -100;
-        return prev + 1;
-      });
-    }, 50);
+    setFilteredData(result);
+    setCurrentPage(1);
+  }, [searchTerm, filterColumn, data]);
 
-    const truckInterval = setInterval(() => {
-      setTruckPosition((prev) => {
-        if (prev < -100) return 100;
-        return prev - 1;
-      });
-    }, 50);
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData?.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
 
-    return () => {
-      clearInterval(carInterval);
-      clearInterval(truckInterval);
-    };
-  }, []);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Traffic signal lights
-  useEffect(() => {
-    const signalInterval = setInterval(() => {
-      setSignalLight((prev) => {
-        if (prev === "red") return "green";
-        if (prev === "green") return "yellow";
-        return "red";
-      });
-    }, 3000);
-    return () => clearInterval(signalInterval);
-  }, []);
-  const onFinish = (values) => {
-    setLoading(true);
-    console.log("Login values:", values);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(Number(e.target.value));
+    setCurrentPage(1);
   };
+
   return (
-    <div
-      style={{
-        minHeight: "85vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#1a1a1a",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {/* Parking background */}
-      <div
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          top: 0,
-          left: 0,
-          zIndex: 0,
-          overflow: "hidden",
-        }}
-      >
-        {/* Enhanced Road */}
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "80px",
-            backgroundColor: "#333333",
-            top: "50%",
-            transform: "translateY(-50%)",
-            boxShadow: "0 0 15px rgba(0, 0, 0, 0.8)",
-          }}
-        />
-
-        {/* White dashed center line */}
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "4px",
-            background:
-              "repeating-linear-gradient(90deg, #ffffff, #ffffff 30px, transparent 30px, transparent 60px)",
-            top: "50%",
-            transform: "translateY(-50%)",
-            animation: "moveRoadStripe 2s linear infinite",
-          }}
-        />
-
-        {/* Red side lines */}
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "3px",
-            backgroundColor: "#ff4d4f",
-            top: "calc(50% - 40px)",
-            boxShadow: "0 0 5px rgba(255, 77, 79, 0.8)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "3px",
-            backgroundColor: "#ff4d4f",
-            top: "calc(50% + 40px)",
-            boxShadow: "0 0 5px rgba(255, 77, 79, 0.8)",
-          }}
-        />
-
-        {/* Traffic signals */}
-        <div
-          style={{
-            position: "absolute",
-            width: "15px",
-            height: "40px",
-            backgroundColor: "#222",
-            top: "calc(50% - 60px)",
-            left: "20%",
-            borderRadius: "3px",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.5)",
-          }}
-        >
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              backgroundColor: signalLight === "red" ? "#ff4d4f" : "#550000",
-              margin: "3px auto",
-              boxShadow: signalLight === "red" ? "0 0 8px #ff4d4f" : "none",
-            }}
-          />
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              backgroundColor: signalLight === "yellow" ? "#faad14" : "#553300",
-              margin: "3px auto",
-              boxShadow: signalLight === "yellow" ? "0 0 8px #faad14" : "none",
-            }}
-          />
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              backgroundColor: signalLight === "green" ? "#52c41a" : "#005500",
-              margin: "3px auto",
-              boxShadow: signalLight === "green" ? "0 0 8px #52c41a" : "none",
-            }}
+    <div className="container mx-auto p-4">
+      {/* Search and Filter Controls */}
+      <div className="mb-4 flex flex-col sm:flex-row gap-4">
+        <div className="flex-1">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-
-        {/* <div
-          style={{
-            position: "absolute",
-            width: "15px",
-            height: "40px",
-            backgroundColor: "#222",
-            top: "calc(50% - 60px)",
-            right: "20%",
-            borderRadius: "3px",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.5)",
-          }}
-        >
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              backgroundColor: signalLight === "red" ? "#ff4d4f" : "#550000",
-              margin: "3px auto",
-              boxShadow: signalLight === "red" ? "0 0 8px #ff4d4f" : "none",
-            }}
-          />
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              backgroundColor: signalLight === "yellow" ? "#faad14" : "#553300",
-              margin: "3px auto",
-              boxShadow: signalLight === "yellow" ? "0 0 8px #faad14" : "none",
-            }}
-          />
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              backgroundColor: signalLight === "green" ? "#52c41a" : "#005500",
-              margin: "3px auto",
-              boxShadow: signalLight === "green" ? "0 0 8px #52c41a" : "none",
-            }}
-          />
-        </div> */}
-
-        {/* Parking slots */}
-        <div
-          style={{
-            position: "absolute",
-            width: "100px",
-            height: "50px",
-            border: "2px dashed rgba(255, 255, 255, 0.3)",
-            background: "rgba(255, 255, 255, 0.1)",
-            top: "20%",
-            left: "10%",
-            transform: "rotate(-10deg)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            width: "100px",
-            height: "50px",
-            border: "2px dashed rgba(255, 255, 255, 0.3)",
-            background: "rgba(255, 255, 255, 0.1)",
-            top: "60%",
-            left: "30%",
-            transform: "rotate(5deg)",
-          }}
-        />
-
-        {parkingSpaces.map((space, index) => (
-          <div
-            key={space.id}
-            style={{
-              position: "absolute",
-              top: `${5 + Math.floor(index / 3) * 10}%`,
-              right: `${5 + (index % 3) * 10}%`,
-              width: "80px",
-              height: "40px",
-              border: "2px dashed",
-              borderColor: space.occupied ? "#ff4d4f" : "#52c41a",
-              borderRadius: "4px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              zIndex: 2,
-              boxShadow: space.occupied
-                ? "0 0 8px rgba(255, 77, 79, 0.5)"
-                : "0 0 8px rgba(82, 196, 26, 0.5)",
-              transition: "all 0.5s ease",
-            }}
+        <div className="flex gap-2">
+          <select
+            value={filterColumn}
+            onChange={(e) => setFilterColumn(e.target.value)}
+            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            {space.occupied && (
-              <CarOutlined style={{ fontSize: "24px", color: "#fff" }} />
-            )}
-          </div>
-        ))}
-
-        {/* Moving vehicles */}
-        <div
-          style={{
-            position: "absolute",
-            top: "calc(50% - 20px)",
-            left: `${carPosition}%`,
-            transition: "left 0.05s linear",
-            zIndex: 3,
-          }}
-        >
-          <FaCarSide style={{ fontSize: "40px", color: "#ff4d4f" }} />
+            <option value="">All Columns</option>
+            {columns?.map((col) => (
+              <option key={col?.accessor} value={col?.accessor}>
+                {col?.header}
+              </option>
+            ))}
+          </select>
+          <select
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="5">5 per page</option>
+            <option value="10">10 per page</option>
+            <option value="20">20 per page</option>
+          </select>
         </div>
       </div>
-      {/* Login card */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "400px",
-          zIndex: 10,
-          opacity: 1,
-          transform: "translateY(0px)",
-          transition: "opacity 0.8s, transform 0.8s",
-        }}
-      >
-        <Card
-          style={{
-            backgroundColor: "rgba(45, 45, 45, 0.9)",
-            borderRadius: "8px",
-            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.5)",
-          }}
-        >
-          <div style={{ textAlign: "center", marginBottom: "30px" }}>
-            <Title
-              level={2}
-              style={{
-                margin: 0,
-                background: "linear-gradient(90deg, #40a9ff, #ffffff, #40a9ff)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontWeight: "bold",
-              }}
-            >
-              Welcome to PickParking
-            </Title>
-            <Text style={{ color: "#d9d9d9" }}>
-              Find your spot. Park with ease.
-            </Text>
-          </div>
 
-          <Form
-            form={form}
-            name="login"
-            layout="vertical"
-            onFinish={onFinish}
-            autoComplete="off"
-          >
-            <Form.Item
-              name="email"
-              rules={[
-                { required: true, message: "Please input your email!" },
-                { type: "email", message: "Please enter a valid email!" },
-              ]}
-              style={{ marginBottom: "24px" }}
-            >
-              <Input
-                prefix={
-                  <MailOutlined style={{ color: "rgba(255,255,255,0.5)" }} />
-                }
-                placeholder="Email"
-                size="large"
-                style={{
-                  backgroundColor: "#3a3a3a",
-                  border: "1px solid #444",
-                  color: "#fff",
-                }}
-              />
-            </Form.Item>
-
-            <Form.Item
-              name="password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
-              style={{ marginBottom: "24px" }}
-            >
-              <Input.Password
-                prefix={
-                  <LockOutlined style={{ color: "rgba(255,255,255,0.5)" }} />
-                }
-                placeholder="Password"
-                size="large"
-                iconRender={(visible) =>
-                  visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
-                }
-                style={{
-                  backgroundColor: "#3a3a3a",
-                  border: "1px solid #444",
-                  color: "#fff",
-                }}
-              />
-            </Form.Item>
-
-            <Form.Item style={{ marginBottom: "16px" }}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                size="large"
-                block
-                style={{
-                  height: "46px",
-                  background: loading ? "#1890ff" : "#40a9ff",
-                  borderColor: "#40a9ff",
-                  transition: "background 0.3s",
-                }}
-                icon={loading ? <LoadingOutlined /> : <CarOutlined />}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.02)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-                onMouseDown={(e) => {
-                  e.currentTarget.style.transform = "scale(0.98)";
-                }}
-                onMouseUp={(e) => {
-                  e.currentTarget.style.transform = "scale(1.02)";
-                }}
-              >
-                {loading ? "Parking In..." : "Log In"}
-              </Button>
-            </Form.Item>
-
-            <div style={{ textAlign: "center" }}>
-              <Link style={{ color: "#40a9ff" }}>Forgot password?</Link>
-              <div style={{ marginTop: "12px", color: "#d9d9d9" }}>
-                Don't have an account?{" "}
-                <Link style={{ color: "#40a9ff" }}>Sign up</Link>
-              </div>
-            </div>
-          </Form>
-        </Card>
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead className="bg-gray-100">
+            <tr>
+              {columns?.map((col) => (
+                <th
+                  key={col?.accessor}
+                  className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+                >
+                  {col?.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {currentItems?.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                {columns?.map((col) => (
+                  <td
+                    key={col.accessor}
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-600"
+                  >
+                    {col?.render ? col?.render(item) : item[col.accessor]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          @keyframes moveRoadStripe {
-            0% {
-              background-position: 0 0;
-            }
-            100% {
-              background-position: -60px 0;
-            }
-          }
-        `,
-        }}
-      />
+
+      {/* Pagination */}
+      <div className="mt-4 flex flex-col sm:flex-row justify-between items-center">
+        <div className="mb-2 sm:mb-0">
+          Showing {indexOfFirstItem + 1} to{" "}
+          {Math.min(indexOfLastItem, filteredData?.length)} of{" "}
+          {filteredData?.length} entries
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg disabled:bg-gray-300 hover:bg-blue-600"
+          >
+            Previous
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => paginate(page)}
+              className={`px-4 py-2 rounded-lg ${
+                currentPage === page
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg disabled:bg-gray-300 hover:bg-blue-600"
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Login;
+export default DataTable;
