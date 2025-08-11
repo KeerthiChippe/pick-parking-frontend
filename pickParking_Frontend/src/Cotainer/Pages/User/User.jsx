@@ -496,28 +496,6 @@ const UserDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-4">
-              <div className="bg-blue-500 text-white p-2 rounded-lg">
-                <CarOutlined className="text-xl" />
-              </div>
-              <Title level={4} className="mb-0">
-                ParkEase
-              </Title>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Button type="text" icon={<BellOutlined />} />
-              <Button type="text" icon={<SettingOutlined />} />
-              <Avatar icon={<UserOutlined />} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs
           activeKey={activeTab}

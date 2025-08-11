@@ -30,54 +30,36 @@ const Sidebar = () => {
   const items = [
     {
       icon: LayoutGrid,
-      label: "仪表板", // Dashboard in Chinese
-      route: "/agentdashboard",
-      description: "代理绩效指标", // Agent performance metrics
+      label: "mapComponent", // Dashboard in Chinese
+      route: "/mapComponent",
+      description: "mapComponent", // Agent performance metrics
       color: "blue",
     },
     {
       icon: Calendar,
-      label: "表单", // Form
-      route: "/agent",
-      description: "管理患者信息", // Manage patient information
+      label: "userDashboard", // Form
+      route: "/userDashboard",
+      description: "userDashboard", // Manage patient information
       color: "orange",
     },
     {
       icon: BarChart3,
-      label: "统计", // Statistics
-      description: "高级分析和洞察", // Advanced analytics and insights
+      label: "OwnerDashboard", // Statistics
+      description: "OwnerDashboard", // Advanced analytics and insights
       color: "teal",
       subItems: [
         {
           icon: History,
-          label: "通话记录",
-          route: "/callHistory",
-          description: "完整通话记录",
+          label: "OwnerDashboard",
+          route: "/OwnerDashboard",
+          description: "OwnerDashboard",
         }, // Call History
         {
           icon: ArrowDown,
-          label: "呼入",
-          route: "/inbound",
-          description: "来电分析",
+          label: "siginin",
+          route: "/siginin",
+          description: "siginin",
         }, // Inbound
-        {
-          icon: ArrowUp,
-          label: "呼出",
-          route: "/outbound",
-          description: "去电指标",
-        }, // Outbound
-        {
-          icon: Phone,
-          label: "通话质量",
-          route: "/callquality",
-          description: "通话质量监控",
-        }, // Call Quality
-        {
-          icon: Mail,
-          label: "电子邮件",
-          route: "/email",
-          description: "电子邮件通信统计",
-        }, // Email
       ],
     },
   ].map((item, index) => ({
@@ -247,24 +229,8 @@ const Sidebar = () => {
           </button>
         </div>
       </Sider>
-
       <Layout>
-        <Content className="p-6 bg-gray-100 min-h-screen">
-          <div className="flex items-center justify-between mb-6">
-            <div className="relative w-full max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="搜索导航..." // Search navigation
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-              />
-            </div>
-            <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-600 hover:bg-gray-200 rounded-full">
-                <Bell className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
+        <Content className="p-2 bg-gray-100 min-h-screen">
           <Outlet />
         </Content>
       </Layout>

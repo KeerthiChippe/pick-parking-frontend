@@ -1,254 +1,125 @@
 import React from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Checkbox,
-  Row,
-  Col,
-  Card,
-  Typography,
-  Space,
-  Flex,
-} from "antd";
-import { CheckCircleOutlined } from "@ant-design/icons";
-
-const { Title, Paragraph } = Typography;
+import { ImageCarousel } from "./ImageShow";
 
 const RegisterComponent = () => {
-  const [form] = Form.useForm();
-
-  const onFinish = (values) => {
-    console.log("Form values:", values);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    console.log("Form values:", Object.fromEntries(formData));
   };
 
   return (
-    <div
-      style={{
-        background:
-          "linear-gradient(90deg,rgb(51, 52, 52),rgb(50, 71, 79),rgb(36, 77, 110))",
-        // minHeight: "85vh",
-      }}
-      // className="bg-red-500"
-    >
-      <Row className="pb-5">
-        <Col
-          span={12}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-            overflow: "hidden",
-            paddingRight: "10px",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              maxWidth: "700px",
+    <div className="flex flex-col lg:flex-row ">
+      <div className="lg:w-1/2 w-full flex items-center justify-center bg-gray-500 rounded-lg">
+        {/* <div className="w-full max-w-2xl"> */}
+        <ImageCarousel />
+        {/* </div> */}
+      </div>
 
-              opacity: 1,
-              transform: "translateY(0px)",
-              transition: "opacity 0.8s, transform 0.8s",
-            }}
-          >
-            <Card
-              style={{
-                borderRadius: "12px",
-                boxShadow: "0 6px 20px rgba(0, 0, 0, 0.2)",
-                // padding: "24px",
-                maxWidth: 600,
-                margin: "auto",
-                marginTop: 40,
-              }}
-            >
-              <Flex justify="center">
-                <Space direction="vertical" align="center">
-                  <Title
-                    level={2}
-                    style={{
-                      margin: 0,
-                      background: "linear-gradient(90deg, #ff4d4f, #ffec3d)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    🚙 Create an Account
-                  </Title>
-                </Space>
-              </Flex>
+      {/* Right Side - Form */}
+      <div className="lg:w-1/2 w-full flex items-center justify-center p-6 lg:p-12 bg-white">
+        <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-yellow-400 text-center mb-6">
+            🚙 Create an Account
+          </h2>
 
-              <Form
-                form={form}
-                layout="vertical"
-                onFinish={onFinish}
-                autoComplete="off"
-                style={{ marginTop: 16 }}
-              >
-                <Form.Item
-                  label="📧 Email"
-                  name="email"
-                  rules={[
-                    { required: true, message: "Email required" },
-                    { type: "email", message: "Invalid email" },
-                  ]}
-                  style={{ marginBottom: 12 }}
-                >
-                  <Input placeholder="you@example.com" />
-                </Form.Item>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium mb-1">📧 Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+              />
+            </div>
 
-                <Form.Item
-                  label="👤 Username"
-                  name="username"
-                  rules={[{ required: true, message: "Username required" }]}
-                  style={{ marginBottom: 12 }}
-                >
-                  <Input placeholder="Choose a username" />
-                </Form.Item>
+            {/* Username */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                👤 Username
+              </label>
+              <input
+                type="text"
+                name="username"
+                placeholder="Choose a username"
+                required
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+              />
+            </div>
 
-                <Form.Item
-                  label="🔒 Password"
-                  name="password"
-                  rules={[{ required: true, message: "Password required" }]}
-                  style={{ marginBottom: 12 }}
-                >
-                  <Input.Password placeholder="Create a password" />
-                </Form.Item>
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                🔒 Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Create a password"
+                required
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+              />
+            </div>
 
-                <Form.Item
-                  label="🧾 Account Type"
-                  name="accountType"
-                  rules={[{ required: true, message: "Select account type" }]}
-                  style={{ marginBottom: 12 }}
-                >
-                  <Radio.Group>
-                    <Radio value="looking">🅿️ Looking for Parking</Radio>
-                    <Radio value="offering">🏠 Have Parking Space</Radio>
-                  </Radio.Group>
-                </Form.Item>
-
-                <Form.Item
-                  name="agreement"
-                  valuePropName="checked"
-                  rules={[
-                    {
-                      validator: (_, value) =>
-                        value
-                          ? Promise.resolve()
-                          : Promise.reject("Must agree to terms"),
-                    },
-                  ]}
-                  style={{ marginBottom: 12 }}
-                >
-                  <Checkbox>
-                    ✅ I agree to the{" "}
-                    <a href="#" className="text-blue-500 hover:underline">
-                      Terms & Privacy
-                    </a>
-                  </Checkbox>
-                </Form.Item>
-
-                <Form.Item style={{ marginBottom: 16 }}>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    block
-                    style={{
-                      backgroundColor: "#1890ff",
-                      borderColor: "#1890ff",
-                      borderRadius: "50px",
-                      fontWeight: "bold",
-                      height: 40,
-                    }}
-                  >
-                    🚀 Create Account
-                  </Button>
-                </Form.Item>
-
-                <Paragraph
-                  style={{ textAlign: "center", fontSize: 12, margin: 0 }}
-                >
-                  Already have an account?{" "}
-                  <a href="#" className="text-blue-500 hover:underline">
-                    Login
-                  </a>
-                </Paragraph>
-              </Form>
-            </Card>
-          </div>
-        </Col>
-        <Col
-          span={12}
-          style={{
-            paddingLeft: "60px", // move right side content a bit right
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <div>
-            <Title
-              level={1}
-              style={{
-                margin: 0,
-                background: "linear-gradient(90deg, #40a9ff, #ffffff, #40a9ff)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontWeight: "bold",
-              }}
-            >
-              Welcome to ParkSpot
-            </Title>
-            <Paragraph
-              style={{ color: "#fff", fontSize: 18, marginBottom: 32 }}
-            >
-              Join our community of drivers and parking space owners making
-              parking simpler and more profitable.
-            </Paragraph>
-
-            <Title
-              level={3}
-              style={{
-                margin: 10,
-                background: "linear-gradient(90deg, #40a9ff, #ffffff, #40a9ff)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontWeight: "bold",
-              }}
-            >
-              With ParkSpot you can:
-            </Title>
-            <Space direction="vertical" size="middle">
-              <div className="" style={{ color: "#fff" }}>
-                <CheckCircleOutlined
-                  style={{ color: "#52c41a", marginRight: 8 }}
-                />
-                Find and book parking spots in advance
+            {/* Account Type */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                🧾 Account Type
+              </label>
+              <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="accountType"
+                    value="looking"
+                    required
+                  />
+                  🅿️ Looking for Parking
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="accountType"
+                    value="offering"
+                    required
+                  />
+                  🏠 Have Parking Space
+                </label>
               </div>
-              <div className="info-item" style={{ color: "#fff" }}>
-                <CheckCircleOutlined
-                  style={{ color: "#52c41a", marginRight: 8 }}
-                />
-                List your unused parking spaces to earn money
-              </div>
-              <div className="info-item" style={{ color: "#fff" }}>
-                <CheckCircleOutlined
-                  style={{ color: "#52c41a", marginRight: 8 }}
-                />
-                Save time and avoid parking hassles
-              </div>
-              <div className="info-item" style={{ color: "#fff" }}>
-                <CheckCircleOutlined
-                  style={{ color: "#52c41a", marginRight: 8 }}
-                />
-                Manage bookings and payments securely
-              </div>
-            </Space>
-          </div>
-        </Col>
-      </Row>
+            </div>
+
+            {/* Agreement */}
+            <div>
+              <label className="flex items-center gap-2">
+                <input type="checkbox" name="agreement" required />✅ I agree to
+                the{" "}
+                <a href="#" className="text-blue-500 hover:underline">
+                  Terms & Privacy
+                </a>
+              </label>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition"
+            >
+              🚀 Create Account
+            </button>
+
+            {/* Login Link */}
+            <p className="text-center text-sm mt-2">
+              Already have an account?{" "}
+              <a href="#" className="text-blue-500 hover:underline">
+                Login
+              </a>
+            </p>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

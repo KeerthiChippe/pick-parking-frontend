@@ -32,7 +32,7 @@ import logo from "../../../public/voxpro.ico";
 
 const { Header, Content } = Layout;
 
-const SideBar = () => {
+const Bar = () => {
   const [activeItem, setActiveItem] = useState(0);
   const [activeSubItem, setActiveSubItem] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -44,26 +44,27 @@ const SideBar = () => {
   const items = [
     {
       icon: LayoutGrid,
-      label: "DashBoard",
-      route: "/agentdashboard",
+      label: "Map Component",
+      route: "/mapComponent",
       color: "green",
     },
-    {
-      icon: Calendar,
-      label: "Form",
-      route: "/userDashboard",
-      color: "orange",
-    },
+
     {
       icon: BarChart3,
-      label: "Statistics",
+      label: "Dashboard",
       color: "teal",
       subItems: [
-        { icon: History, label: "Call History", route: "/callHistory" },
-        { icon: ArrowDown, label: "Inbound", route: "/inbound" },
-        { icon: ArrowUp, label: "Outbound", route: "/outbound" },
-        { icon: Phone, label: "CallQuality Dashboard", route: "/callquality" },
-        { icon: Mail, label: "Email", route: "/email" },
+        {
+          icon: History,
+          label: "OwnerDashboard",
+          route: "/OwnerDashboard",
+        },
+        {
+          icon: Calendar,
+          label: "User",
+          route: "/userDashboard",
+          color: "orange",
+        },
       ],
     },
   ].map((item, index) => ({
@@ -265,11 +266,11 @@ const SideBar = () => {
           ))}
         </div>
       )}
-      <Content className="h-[calc(100vh-64px)] bg-gray-50 overflow-y-auto p-4">
+      <Content className="h-[calc(100vh-64px)] bg-gray-50 overflow-y-auto ">
         <Outlet />
       </Content>
     </Layout>
   );
 };
 
-export default SideBar;
+export default Bar;
